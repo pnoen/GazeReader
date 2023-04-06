@@ -1,19 +1,34 @@
 package com.example.gazereader.view;
 
 import android.animation.FloatEvaluator;
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.os.Build;
+import android.os.SystemClock;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.example.gazereader.MainActivity;
+import com.example.gazereader.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GazePathView extends View {
@@ -88,7 +103,9 @@ public class GazePathView extends View {
 
   public void onGaze(float x, float y, boolean is_fixation) {
     long curTime = System.currentTimeMillis();
-    PointF curPoint = new PointF(x - offsetX, y - offsetY);
+//    Log.i("CurPoint", "x: " + x + " " + (x-offsetX) + " y: " + y + " " + (y-offsetY));
+//    PointF curPoint = new PointF(x - offsetX, y - offsetY);
+    PointF curPoint = new PointF(x, y);
     if (!wasFixation || !is_fixation) {
       processSaccade(curTime, curPoint);
     } else {
@@ -189,6 +206,7 @@ public class GazePathView extends View {
       drawSaccade(canvas);
     } else {
       drawFixation(canvas);
+      checkMaxFixation();
     }
   }
 
@@ -200,5 +218,35 @@ public class GazePathView extends View {
   }
   private void drawFixation(Canvas canvas) {
     canvas.drawCircle(fixationDrawPoint.x, fixationDrawPoint.y, curPointSize, pointPaint);
+  }
+
+  private LinearLayout linearLayoutView;
+
+  private void checkMaxFixation() {
+    if (curPointSize == MAX_POINT_RADIUS) {
+//      Log.i(GazePathView.class.getSimpleName(), "click " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
+      linearLayoutView = ((View) this.getParent()).findViewById(R.id.main_linearLayout);
+      for (int i = 0; i < linearLayoutView.getChildCount(); i++) {
+        View view = linearLayoutView.getChildAt(i);
+        if (view instanceof Button) {
+          int[] viewPos = new int[2];
+          view.getLocationOnScreen(viewPos);
+          Rect boundary = new Rect(
+                  viewPos[0],
+                  viewPos[1],
+                  viewPos[0] + view.getWidth(),
+                  viewPos[1] + view.getHeight()
+          );
+
+          if (boundary.contains(Math.round(fixationDrawPoint.x), Math.round(fixationDrawPoint.y))) {
+            view.performClick();
+            Log.i("Click point", "" + getWeightedAverage(fixationHistory) + " " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
+            Log.i("Boundary", viewPos[0] + " " + (viewPos[0] + view.getWidth()) + " " + viewPos[1] + " " + (viewPos[1] + view.getHeight()));
+            clearFixation();
+            break;
+          }
+        }
+      }
+    }
   }
 }

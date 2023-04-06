@@ -1,6 +1,7 @@
 package com.example.gazereader;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -9,8 +10,11 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -187,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnStartCalibration, btnSetCalibration;
     private Button btnGuiDemo;
     private CalibrationViewer viewCalibration;
+//    private LinearLayout linearLayoutView;
 
     // calibration type
     private CalibrationModeType calibrationType = CalibrationModeType.SIX_POINT;
@@ -201,13 +206,14 @@ public class MainActivity extends AppCompatActivity {
         viewWarningTracking = findViewById(R.id.view_warning_tracking);
 
         btnStartCalibration = findViewById(R.id.btn_start_calibration);
-        btnStartCalibration.setOnClickListener(onClickListener);
+        btnStartCalibration.setOnClickListener(onClickListenerBtn1);
 
         btnSetCalibration = findViewById(R.id.btn_set_calibration);
-        btnSetCalibration.setOnClickListener(onClickListener);
+        btnSetCalibration.setOnClickListener(onClickListenerBtn2);
+//        btnSetCalibration.setOnTouchListener(onTouchListener);
 
         btnGuiDemo = findViewById(R.id.btn_gui_demo);
-        btnGuiDemo.setOnClickListener(onClickListener);
+        btnGuiDemo.setOnClickListener(onClickListenerBtn3);
 
 //        viewPoint = findViewById(R.id.view_point);
         viewFaceBox = findViewById(R.id.view_face_box);
@@ -285,6 +291,30 @@ public class MainActivity extends AppCompatActivity {
             } else if (v == btnGuiDemo) {
                 showGuiDemo();
             }
+        }
+    };
+
+    private View.OnClickListener onClickListenerBtn1 = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+//            Log.i("Btn 1", "CLICK EVENT");
+            startCalibration();
+        }
+    };
+
+    private View.OnClickListener onClickListenerBtn2 = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+//            Log.i("Btn 2", "CLICK EVENT");
+            setCalibration();
+        }
+    };
+
+    private View.OnClickListener onClickListenerBtn3 = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+//            Log.i("Btn 3", "CLICK EVENT");
+            showGuiDemo();
         }
     };
 
@@ -500,14 +530,14 @@ public class MainActivity extends AppCompatActivity {
         LoadCalibrationResult result = gazeTrackerManager.loadCalibrationData();
         switch (result) {
             case SUCCESS:
-                showToast("setCalibrationData success", false);
+                showToast("setCalibrationData success", true);
                 break;
             case FAIL_DOING_CALIBRATION:
-                showToast("calibrating", false);
+                showToast("calibrating", true);
                 break;
-            case FAIL_NO_CALIBRATION_DATA:
-                showToast("Calibration data is null", true);
-                break;
+//            case FAIL_NO_CALIBRATION_DATA:
+//                showToast("Calibration data is null", true);
+//                break;
             case FAIL_HAS_NO_TRACKER:
                 showToast("No tracker has initialized", true);
                 break;
