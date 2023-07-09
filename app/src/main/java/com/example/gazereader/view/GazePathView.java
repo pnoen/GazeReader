@@ -220,7 +220,7 @@ public class GazePathView extends View {
     canvas.drawCircle(fixationDrawPoint.x, fixationDrawPoint.y, curPointSize, pointPaint);
   }
 
-  private LinearLayout linearLayoutView;
+  private ViewGroup linearLayoutView;
 
   private void checkMaxFixation() {
     if (curPointSize == MAX_POINT_RADIUS) {

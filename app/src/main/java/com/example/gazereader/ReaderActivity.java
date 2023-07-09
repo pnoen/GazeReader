@@ -1,6 +1,8 @@
 package com.example.gazereader;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,9 +17,18 @@ import camp.visual.gazetracker.gaze.GazeInfo;
 import camp.visual.gazetracker.state.EyeMovementState;
 import camp.visual.gazetracker.state.TrackingState;
 import camp.visual.gazetracker.util.ViewLayoutChecker;
+import io.documentnode.epub4j.domain.Book;
+import io.documentnode.epub4j.epub.EpubReader;
+
 import com.example.gazereader.view.GazePathView;
 
-public class DemoActivity extends AppCompatActivity {
+import java.io.FileDescriptor;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+public class ReaderActivity extends AppCompatActivity {
     private static final String TAG = DemoActivity.class.getSimpleName();
     private final ViewLayoutChecker viewLayoutChecker = new ViewLayoutChecker();
     private GazePathView gazePathView;
@@ -28,9 +39,11 @@ public class DemoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo);
+        setContentView(R.layout.activity_reader);
         gazeTrackerManager = GazeTrackerManager.getInstance();
         Log.i(TAG, "gazeTracker version: " + GazeTracker.getVersionName());
+
+        setEpubReader();
     }
 
     @Override
@@ -68,27 +81,16 @@ public class DemoActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private Button btnHome;
-    private Button btnBook1;
-    private Button btnBook2;
-    private Button btnBook3;
+    private Button btnBack;
     private View viewWarningTracking;
 
     private void initView() {
         gazePathView = findViewById(R.id.gazePathView);
         viewWarningTracking = findViewById(R.id.view_warning_tracking);
 
-        btnHome = findViewById(R.id.btn_home);
-        btnHome.setOnClickListener(onClickListenerHome);
+        btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(onClickListener);
 
-        btnBook1 = findViewById(R.id.btn_book1);
-        btnBook1.setOnClickListener(onClickListenerBookBtn);
-
-        btnBook2 = findViewById(R.id.btn_book2);
-        btnBook2.setOnClickListener(onClickListenerBookBtn);
-
-        btnBook3 = findViewById(R.id.btn_book3);
-        btnBook3.setOnClickListener(onClickListenerBookBtn);
     }
 
     private void setOffsetOfView() {
@@ -134,34 +136,42 @@ public class DemoActivity extends AppCompatActivity {
         });
     }
 
-    private View.OnClickListener onClickListenerHome = new View.OnClickListener() {
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (v == btnHome) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+            if (v == btnBack) {
+                showBackPage();
             }
         }
     };
 
-    private View.OnClickListener onClickListenerBookBtn = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v == btnBook1) {
-                showBook("middlemarch.epub");
-            }
-            else if (v == btnBook2) {
-                showBook("a_room_with_a_view.epub");
-            }
-            else if (v == btnBook3) {
-                showBook("romeo_and_juliet");
-            }
-        }
-    };
-
-    private void showBook(String book) {
-        Intent intent = new Intent(getApplicationContext(), ReaderActivity.class);
-        intent.putExtra("book", book);
+    private void showBackPage() {
+        Intent intent = new Intent(getApplicationContext(), DemoActivity.class);
         startActivity(intent);
+    }
+
+    private EpubReader epubReader;
+    private Book book;
+
+    private void setEpubReader() {
+        Bundle extras = getIntent().getExtras();
+        String bookFile = null;
+        if(extras != null) {
+            bookFile = extras.getString("book");
+        }
+
+        epubReader = new EpubReader();
+        AssetManager assetManager = getApplicationContext().getAssets();
+        try {
+            InputStream inputStream = assetManager.open(bookFile);
+            book = epubReader.readEpub(inputStream);
+            Log.i("TRY", "book");
+
+        } catch (IOException e) {
+            Log.i("EPUB", "Not found " + bookFile);
+            showBackPage();
+        }
+        List<String> titles = book.getMetadata().getTitles();
+        Log.i("EPUB", "book title: " + (titles.isEmpty() ? "book has no title" : titles.get(0)));
     }
 }

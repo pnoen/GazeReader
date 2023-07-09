@@ -25,6 +25,10 @@
             android:name=".DemoActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".ReaderActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
