@@ -405,6 +405,7 @@ public class MainActivity extends AppCompatActivity {
         setViewAtGazeTrackerState();
         hideProgress();
         startTracking();
+        setCalibration();
     }
 
     private void initFail(InitializationErrorType error) {
