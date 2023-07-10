@@ -226,27 +226,66 @@ public class GazePathView extends View {
     if (curPointSize == MAX_POINT_RADIUS) {
 //      Log.i(GazePathView.class.getSimpleName(), "click " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
       linearLayoutView = ((View) this.getParent()).findViewById(R.id.main_linearLayout);
-      for (int i = 0; i < linearLayoutView.getChildCount(); i++) {
-        View view = linearLayoutView.getChildAt(i);
-        if (view instanceof Button) {
-          int[] viewPos = new int[2];
-          view.getLocationOnScreen(viewPos);
-          Rect boundary = new Rect(
-                  viewPos[0],
-                  viewPos[1],
-                  viewPos[0] + view.getWidth(),
-                  viewPos[1] + view.getHeight()
-          );
+//      for (int i = 0; i < linearLayoutView.getChildCount(); i++) {
+//        View view = linearLayoutView.getChildAt(i);
+//        if (view instanceof Button) {
+//          int[] viewPos = new int[2];
+//          view.getLocationOnScreen(viewPos);
+//          Rect boundary = new Rect(
+//                  viewPos[0],
+//                  viewPos[1],
+//                  viewPos[0] + view.getWidth(),
+//                  viewPos[1] + view.getHeight()
+//          );
+//
+//          if (boundary.contains(Math.round(fixationDrawPoint.x), Math.round(fixationDrawPoint.y))) {
+//            view.performClick();
+//            Log.i("Click point", "" + getWeightedAverage(fixationHistory) + " " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
+//            Log.i("Boundary", viewPos[0] + " " + (viewPos[0] + view.getWidth()) + " " + viewPos[1] + " " + (viewPos[1] + view.getHeight()));
+//            clearFixation();
+//            break;
+//          }
+//        }
+//      }
+      View parentView = (View) this.getParent();
+      checkElementCollision(parentView, false);
+    }
+  }
 
-          if (boundary.contains(Math.round(fixationDrawPoint.x), Math.round(fixationDrawPoint.y))) {
-            view.performClick();
-            Log.i("Click point", "" + getWeightedAverage(fixationHistory) + " " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
-            Log.i("Boundary", viewPos[0] + " " + (viewPos[0] + view.getWidth()) + " " + viewPos[1] + " " + (viewPos[1] + view.getHeight()));
-            clearFixation();
-            break;
-          }
+  private boolean checkElementCollision(View view, boolean found) {
+    if (found) {
+      return true;
+    }
+    if (view instanceof Button) {
+      int[] viewPos = new int[2];
+      view.getLocationOnScreen(viewPos);
+      Rect boundary = new Rect(
+              viewPos[0],
+              viewPos[1],
+              viewPos[0] + view.getWidth(),
+              viewPos[1] + view.getHeight()
+      );
+
+      if (boundary.contains(Math.round(fixationDrawPoint.x), Math.round(fixationDrawPoint.y))) {
+        view.performClick();
+        Log.i("Click point", "" + getWeightedAverage(fixationHistory) + " " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
+        Log.i("Boundary", viewPos[0] + " " + (viewPos[0] + view.getWidth()) + " " + viewPos[1] + " " + (viewPos[1] + view.getHeight()));
+        clearFixation();
+        return true;
+      }
+      return false;
+    }
+
+    if (view instanceof ViewGroup) {
+      ViewGroup viewGroup = (ViewGroup) view;
+      for (int i = 0; i < viewGroup.getChildCount(); i++) {
+        View childView = viewGroup.getChildAt(i);
+        boolean clicked = checkElementCollision(childView, false);
+        if (clicked) {
+          return true;
         }
       }
     }
+    return false;
   }
 }
