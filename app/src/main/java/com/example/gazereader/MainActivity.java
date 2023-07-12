@@ -208,8 +208,8 @@ public class MainActivity extends AppCompatActivity {
         btnStartCalibration = findViewById(R.id.btn_start_calibration);
         btnStartCalibration.setOnClickListener(onClickListenerBtn1);
 
-        btnSetCalibration = findViewById(R.id.btn_set_calibration);
-        btnSetCalibration.setOnClickListener(onClickListenerBtn2);
+//        btnSetCalibration = findViewById(R.id.btn_set_calibration);
+//        btnSetCalibration.setOnClickListener(onClickListenerBtn2);
 //        btnSetCalibration.setOnTouchListener(onTouchListener);
 
         btnGuiDemo = findViewById(R.id.btn_gui_demo);
@@ -286,9 +286,10 @@ public class MainActivity extends AppCompatActivity {
             if (v == btnStartCalibration) {
                 startCalibration();
             }
-            else if (v == btnSetCalibration) {
-                setCalibration();
-            } else if (v == btnGuiDemo) {
+//            else if (v == btnSetCalibration) {
+//                setCalibration();
+//            }
+            else if (v == btnGuiDemo) {
                 showGuiDemo();
             }
         }
@@ -373,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 btnStartCalibration.setEnabled(isTracking());
-                btnSetCalibration.setEnabled(isTrackerValid());
+//                btnSetCalibration.setEnabled(isTrackerValid());
                 if (!isTracking()) {
                     hideCalibrationView();
                 }
