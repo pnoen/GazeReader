@@ -427,7 +427,7 @@ public class MainActivity extends AppCompatActivity {
             hideTrackingWarning();
             if (!gazeTrackerManager.isCalibrating()) {
                 float[] filtered_gaze = filterGaze(gazeInfo);
-                Log.i(TAG, "x: " + filtered_gaze[0] + " y: " + filtered_gaze[1]);
+//                Log.i(TAG, "x: " + filtered_gaze[0] + " y: " + filtered_gaze[1]);
 //                showGazePoint(filtered_gaze[0], filtered_gaze[1], gazeInfo.screenState);
                 gazePathView.onGaze(filtered_gaze[0], filtered_gaze[1], gazeInfo.eyeMovementState == EyeMovementState.FIXATION);
             }

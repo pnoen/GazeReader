@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -103,9 +104,9 @@ public class GazePathView extends View {
 
   public void onGaze(float x, float y, boolean is_fixation) {
     long curTime = System.currentTimeMillis();
-//    Log.i("CurPoint", "x: " + x + " " + (x-offsetX) + " y: " + y + " " + (y-offsetY));
-//    PointF curPoint = new PointF(x - offsetX, y - offsetY);
-    PointF curPoint = new PointF(x, y);
+    Log.i("CurPoint", "x: " + x + " " + (x-offsetX) + " y: " + y + " " + (y-offsetY));
+    PointF curPoint = new PointF(x - offsetX, y - offsetY);
+//    PointF curPoint = new PointF(x, y);
     if (!wasFixation || !is_fixation) {
       processSaccade(curTime, curPoint);
     } else {
@@ -216,37 +217,13 @@ public class GazePathView extends View {
     canvas.drawLine(saccadeRootPoint.x, saccadeRootPoint.y, saccadeTarget.x, saccadeTarget.y, linePaint);
 
   }
+
   private void drawFixation(Canvas canvas) {
     canvas.drawCircle(fixationDrawPoint.x, fixationDrawPoint.y, curPointSize, pointPaint);
   }
 
-  private ViewGroup linearLayoutView;
-
   private void checkMaxFixation() {
     if (curPointSize == MAX_POINT_RADIUS) {
-//      Log.i(GazePathView.class.getSimpleName(), "click " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
-      linearLayoutView = ((View) this.getParent()).findViewById(R.id.main_linearLayout);
-//      for (int i = 0; i < linearLayoutView.getChildCount(); i++) {
-//        View view = linearLayoutView.getChildAt(i);
-//        if (view instanceof Button) {
-//          int[] viewPos = new int[2];
-//          view.getLocationOnScreen(viewPos);
-//          Rect boundary = new Rect(
-//                  viewPos[0],
-//                  viewPos[1],
-//                  viewPos[0] + view.getWidth(),
-//                  viewPos[1] + view.getHeight()
-//          );
-//
-//          if (boundary.contains(Math.round(fixationDrawPoint.x), Math.round(fixationDrawPoint.y))) {
-//            view.performClick();
-//            Log.i("Click point", "" + getWeightedAverage(fixationHistory) + " " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
-//            Log.i("Boundary", viewPos[0] + " " + (viewPos[0] + view.getWidth()) + " " + viewPos[1] + " " + (viewPos[1] + view.getHeight()));
-//            clearFixation();
-//            break;
-//          }
-//        }
-//      }
       View parentView = (View) this.getParent();
       checkElementCollision(parentView, false);
     }
@@ -257,21 +234,24 @@ public class GazePathView extends View {
       return true;
     }
     if (view instanceof Button) {
-      int[] viewPos = new int[2];
-      view.getLocationOnScreen(viewPos);
-      Rect boundary = new Rect(
-              viewPos[0],
-              viewPos[1],
-              viewPos[0] + view.getWidth(),
-              viewPos[1] + view.getHeight()
-      );
+      if (view.isShown()) {
+        int[] viewPos = new int[2];
+        view.getLocationOnScreen(viewPos);
+        Rect boundary = new Rect(
+                viewPos[0],
+                viewPos[1],
+                viewPos[0] + view.getWidth(),
+                viewPos[1] + view.getHeight()
+        );
 
-      if (boundary.contains(Math.round(fixationDrawPoint.x), Math.round(fixationDrawPoint.y))) {
-        view.performClick();
-        Log.i("Click point", "" + getWeightedAverage(fixationHistory) + " " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
-        Log.i("Boundary", viewPos[0] + " " + (viewPos[0] + view.getWidth()) + " " + viewPos[1] + " " + (viewPos[1] + view.getHeight()));
-        clearFixation();
-        return true;
+        if (boundary.contains(Math.round(fixationDrawPoint.x), Math.round(fixationDrawPoint.y))) {
+          view.performClick();
+          Log.i("Click point", "" + getWeightedAverage(fixationHistory) + " " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
+          Log.i("Boundary", viewPos[0] + " " + (viewPos[0] + view.getWidth()) + " " + viewPos[1] + " " + (viewPos[1] + view.getHeight()));
+          Log.i("size", view.getWidth() + " " + view.getHeight());
+          clearFixation();
+          return true;
+        }
       }
       return false;
     }

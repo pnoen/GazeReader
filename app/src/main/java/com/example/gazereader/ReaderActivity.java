@@ -109,7 +109,7 @@ public class ReaderActivity extends AppCompatActivity {
                 hideTrackingWarning();
                 if (oneEuroFilterManager.filterValues(gazeInfo.timestamp, gazeInfo.x, gazeInfo.y)) {
                     float[] filtered = oneEuroFilterManager.getFilteredValues();
-                    Log.i(TAG, "x: " + filtered[0] + " y: " + filtered[1]);
+//                    Log.i(TAG, "x: " + filtered[0] + " y: " + filtered[1]);
                     gazePathView.onGaze(filtered[0], filtered[1], gazeInfo.eyeMovementState == EyeMovementState.FIXATION);
                 }
             } else {
