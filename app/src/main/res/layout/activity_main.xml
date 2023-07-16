@@ -149,10 +149,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.example.gazereader.view.FaceBoxView
-        android:id="@+id/view_face_box"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+<!--    <com.example.gazereader.view.FaceBoxView-->
+<!--        android:id="@+id/view_face_box"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
 
     <!-- Calibration view -->
     <com.example.gazereader.view.CalibrationViewer

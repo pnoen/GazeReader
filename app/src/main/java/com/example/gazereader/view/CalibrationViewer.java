@@ -24,8 +24,8 @@ public class CalibrationViewer extends ViewGroup {
   private Paint calibPoint;
   private Boolean toDraw = true;
   private CalibrationPoint calibrationPoint;
-  private int backgroundColor = Color.rgb(0x64,0x5E, 0x5E);
-//  private int backgroundColor = Color.argb(0x88,0x64,0x5E, 0x5E);
+//  private int backgroundColor = Color.rgb(0x64,0x5E, 0x5E);
+  private int backgroundColor = Color.rgb(0xff,0xff, 0xff);
   private int redColor = Color.rgb(0xEF,0x53, 0x50);
   private int purpleColor = Color.rgb(0xAB,0x47, 0xBC);
   private int orangeColor = Color.rgb(0xFF,0xA7, 0x26);
@@ -60,7 +60,7 @@ public class CalibrationViewer extends ViewGroup {
   private void init(Context context) {
     textPaint.setAntiAlias(true);
     textPaint.setTextSize(16 * getResources().getDisplayMetrics().density);
-    textPaint.setColor(0xFFFFFFFF);
+    textPaint.setColor(0xff000000);
     textPaint.setTextAlign(Paint.Align.CENTER);
 
     setBackgroundColor(backgroundColor);

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:keepScreenOn="true"
-    tools:context=".DemoActivity">
+    tools:context=".LibraryActivity">
 
     <View
         android:id="@+id/view_warning_tracking"
@@ -413,12 +413,8 @@
                     android:textColor="#fff"
                     android:textStyle="bold" />
             </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
-
-
 
     <com.example.gazereader.view.GazePathView
         android:id="@+id/gazePathView"

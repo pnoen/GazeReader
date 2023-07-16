@@ -1,7 +1,6 @@
 package com.example.gazereader;
 
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,14 +21,12 @@ import io.documentnode.epub4j.epub.EpubReader;
 
 import com.example.gazereader.view.GazePathView;
 
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 public class ReaderActivity extends AppCompatActivity {
-    private static final String TAG = DemoActivity.class.getSimpleName();
+    private static final String TAG = LibraryActivity.class.getSimpleName();
     private final ViewLayoutChecker viewLayoutChecker = new ViewLayoutChecker();
     private GazePathView gazePathView;
     private GazeTrackerManager gazeTrackerManager;
@@ -146,7 +143,7 @@ public class ReaderActivity extends AppCompatActivity {
     };
 
     private void showBackPage() {
-        Intent intent = new Intent(getApplicationContext(), DemoActivity.class);
+        Intent intent = new Intent(getApplicationContext(), LibraryActivity.class);
         startActivity(intent);
     }
 

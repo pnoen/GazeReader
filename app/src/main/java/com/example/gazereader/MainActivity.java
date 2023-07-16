@@ -1,7 +1,6 @@
 package com.example.gazereader;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -10,11 +9,8 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,10 +33,8 @@ import camp.visual.gazetracker.state.EyeMovementState;
 import camp.visual.gazetracker.state.TrackingState;
 import camp.visual.gazetracker.util.ViewLayoutChecker;
 
-import com.example.gazereader.GazeTrackerManager;
 import com.example.gazereader.GazeTrackerManager.LoadCalibrationResult;
 import com.example.gazereader.view.CalibrationViewer;
-import com.example.gazereader.view.FaceBoxView;
 import com.example.gazereader.view.GazePathView;
 
 public class MainActivity extends AppCompatActivity {
@@ -186,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
     private View layoutProgress;
     private View viewWarningTracking;
 //    private PointView viewPoint;
-    private FaceBoxView viewFaceBox;
+//    private FaceBoxView viewFaceBox;
     private GazePathView gazePathView;
     private Button btnStartCalibration, btnSetCalibration;
     private Button btnGuiDemo;
@@ -216,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
         btnGuiDemo.setOnClickListener(onClickListenerBtn3);
 
 //        viewPoint = findViewById(R.id.view_point);
-        viewFaceBox = findViewById(R.id.view_face_box);
+//        viewFaceBox = findViewById(R.id.view_face_box);
         viewCalibration = findViewById(R.id.view_calibration);
         gazePathView = findViewById(R.id.gazePathView);
 
@@ -234,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void getOffset(int x, int y) {
                 gazePathView.setOffset(x, y);
-                viewFaceBox.setOffset(x, y);
+//                viewFaceBox.setOffset(x, y);
                 viewCalibration.setOffset(x, y);
             }
         });
@@ -548,7 +542,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showGuiDemo() {
-        Intent intent = new Intent(getApplicationContext(), DemoActivity.class);
+        Intent intent = new Intent(getApplicationContext(), LibraryActivity.class);
         startActivity(intent);
     }
 }

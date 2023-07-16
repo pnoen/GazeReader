@@ -18,8 +18,8 @@ import camp.visual.gazetracker.state.TrackingState;
 import camp.visual.gazetracker.util.ViewLayoutChecker;
 import com.example.gazereader.view.GazePathView;
 
-public class DemoActivity extends AppCompatActivity {
-    private static final String TAG = DemoActivity.class.getSimpleName();
+public class LibraryActivity extends AppCompatActivity {
+    private static final String TAG = LibraryActivity.class.getSimpleName();
     private final ViewLayoutChecker viewLayoutChecker = new ViewLayoutChecker();
     private GazePathView gazePathView;
     private GazeTrackerManager gazeTrackerManager;
@@ -29,7 +29,7 @@ public class DemoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo);
+        setContentView(R.layout.activity_library);
         gazeTrackerManager = GazeTrackerManager.getInstance();
         Log.i(TAG, "gazeTracker version: " + GazeTracker.getVersionName());
     }
@@ -100,7 +100,7 @@ public class DemoActivity extends AppCompatActivity {
         btnRoomWithView.setOnClickListener(onClickListenerBookBtn);
 
         btnMobyDick = findViewById(R.id.btn_moby_dick);
-        btnMobyDick.setOnClickListener(onClickListenerSettings);
+        btnMobyDick.setOnClickListener(onClickListenerBookBtn);
 
         btnEnchantedApril = findViewById(R.id.btn_enchanted_april);
         btnEnchantedApril.setOnClickListener(onClickListenerBookBtn);
@@ -189,6 +189,7 @@ public class DemoActivity extends AppCompatActivity {
                 showBook("a_room_with_a_view.epub");
             }
             else if (v == btnMobyDick) {
+                Log.i("BOOK", "HERE");
                 showBook("moby_dick.epub");
             }
             else if (v == btnEnchantedApril) {
