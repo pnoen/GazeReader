@@ -20,6 +20,7 @@ import android.view.ViewParent;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -128,7 +129,7 @@ public class GazePathView extends View {
     }
   }
 
-  private  void processSaccade(long timeStamp, PointF curPoint) {
+  private void processSaccade(long timeStamp, PointF curPoint) {
     clearFixation();
     if (needUpdateSaccade(timeStamp)) {
       updateSaccadeRoot(timeStamp);
@@ -235,6 +236,22 @@ public class GazePathView extends View {
     }
     if (view instanceof Button) {
       if (view.isShown()) {
+        if ("scroll".equals((String) view.getTag())) {
+          ScrollView scrollView = ((ViewGroup) this.getParent()).findViewById(R.id.main_scrollview);
+          if (scrollView != null) {
+//            Log.i("SCROLLVIEW", "found");
+            Rect scrollViewBoundary = new Rect();
+            scrollView.getHitRect(scrollViewBoundary);
+            if (!view.getLocalVisibleRect(scrollViewBoundary)) {
+              // view is not visible
+              return false;
+            }
+          }
+          else {
+            return false;
+          }
+        }
+
         int[] viewPos = new int[2];
         view.getLocationOnScreen(viewPos);
         Rect boundary = new Rect(

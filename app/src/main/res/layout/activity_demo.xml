@@ -14,130 +14,416 @@
         android:background="@drawable/red_border_line"
         android:visibility="invisible" />
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/main_linearLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
-
-
-<!--        <Button-->
-<!--            android:id="@+id/btn_home"-->
-<!--            android:layout_width="75dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Home" />-->
-
-<!--        <Space-->
-<!--            android:layout_width="259dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/btn_home"-->
-<!--            android:layout_width="75dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Home" />-->
-
-<!--        <Button-->
-<!--            android:id="@+id/btn_home"-->
-<!--            android:layout_width="75dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Home" />-->
-
-
-
-<!--    </LinearLayout>-->
-
-
-    <RelativeLayout
-        android:id="@+id/main_linearLayout"
-        android:layout_width="410dp"
-        android:layout_height="229dp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="0dp">
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/btn_home"
-            android:layout_width="75dp"
+            android:id="@+id/btn_settings"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="Home" />
+            android:backgroundTint="@color/primaryBlue"
+            android:text="Settings"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_book1"
-            android:layout_width="215dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <LinearLayout
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="65dp"
-            android:text="Middlemarch - George Eliot" />
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
 
-        <Button
-            android:id="@+id/btn_book1"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="280dp"
-            android:layout_marginTop="50dp"
-            android:text="Read" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Library"
+                android:textColor="#000"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/text_book2"
-            android:layout_width="215dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="125dp"
-            android:text="A Room with a View - E. M. Forster" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/btn_book2"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="280dp"
-            android:layout_marginTop="110dp"
-            android:text="Read" />
+            <ScrollView
+                android:id="@+id/main_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="500dp">
 
-        <TextView
-            android:id="@+id/text_book3"
-            android:layout_width="215dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="185dp"
-            android:text="Romeo and Juliet - William Shakespeare" />
+                <TableLayout
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btn_book3"
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="280dp"
-            android:layout_marginTop="179dp"
-            android:text="Read" />
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="125dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="75dp"
+                                app:srcCompat="@drawable/img_placeholder" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Romeo and Juliet - William Shakespeare"
+                                android:textColor="#000" />
+
+                            <Button
+                                android:id="@+id/btn_romeo_and_juliet"
+                                android:layout_width="75dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:backgroundTint="@color/primaryBlue"
+                                android:tag="scroll"
+                                android:text="Read"
+                                android:textAllCaps="false"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="75dp"
+                                app:srcCompat="@drawable/img_placeholder" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="A Room with a View - E.M. Forster"
+                                android:textColor="#000" />
+
+                            <Button
+                                android:id="@+id/btn_room_with_view"
+                                android:layout_width="75dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:backgroundTint="@color/primaryBlue"
+                                android:tag="scroll"
+                                android:text="Read"
+                                android:textAllCaps="false"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="75dp"
+                                app:srcCompat="@drawable/img_placeholder" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Middlemarch - George Eliot"
+                                android:textColor="#000" />
+
+                            <Button
+                                android:id="@+id/btn_middlemarch"
+                                android:layout_width="75dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:backgroundTint="@color/primaryBlue"
+                                android:tag="scroll"
+                                android:text="Read"
+                                android:textAllCaps="false"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="125dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="75dp"
+                                app:srcCompat="@drawable/img_placeholder" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Moby Dick; Or, The Whale - Herman Melville"
+                                android:textColor="#000" />
+
+                            <Button
+                                android:id="@+id/btn_moby_dick"
+                                android:layout_width="75dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:backgroundTint="@color/primaryBlue"
+                                android:tag="scroll"
+                                android:text="Read"
+                                android:textAllCaps="false"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="125dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="75dp"
+                                app:srcCompat="@drawable/img_placeholder" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="The Enchanted April - Elizabeth Von Arnim"
+                                android:textColor="#000" />
+
+                            <Button
+                                android:id="@+id/btn_enchanted_april"
+                                android:layout_width="75dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:backgroundTint="@color/primaryBlue"
+                                android:tag="scroll"
+                                android:text="Read"
+                                android:textAllCaps="false"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="75dp"
+                                app:srcCompat="@drawable/img_placeholder" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Cranford - Eliabeth Cleghorn Gaskell"
+                                android:textColor="#000" />
+
+                            <Button
+                                android:id="@+id/btn_cranford"
+                                android:layout_width="75dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:backgroundTint="@color/primaryBlue"
+                                android:tag="scroll"
+                                android:text="Read"
+                                android:textAllCaps="false"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="125dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="75dp"
+                                app:srcCompat="@drawable/img_placeholder" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="The Expedition of Humphry Clinker - T. Smollett"
+                                android:textColor="#000" />
+
+                            <Button
+                                android:id="@+id/btn_expedition_of_humphry"
+                                android:layout_width="75dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:backgroundTint="@color/primaryBlue"
+                                android:tag="scroll"
+                                android:text="Read"
+                                android:textAllCaps="false"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            tools:ignore="MissingConstraints">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="75dp"
+                                app:srcCompat="@drawable/img_placeholder" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="The Adventures of Roderick Random - T. Smollett"
+                                android:textColor="#000" />
+
+                            <Button
+                                android:id="@+id/btn_adventures_of_roderick"
+                                android:layout_width="75dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:backgroundTint="@color/primaryBlue"
+                                android:tag="scroll"
+                                android:text="Read"
+                                android:textAllCaps="false"
+                                android:textColor="#fff"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </TableRow>
+
+                </TableLayout>
+            </ScrollView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_library_scroll_up"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primaryBlue"
+                    android:text="scroll up"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btn_library_scroll_down"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primaryBlue"
+                    android:text="scroll down"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
-    </RelativeLayout>
 
     <com.example.gazereader.view.GazePathView
         android:id="@+id/gazePathView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-53dp"
-        tools:layout_editor_absoluteY="62dp" />
+        android:layout_height="match_parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

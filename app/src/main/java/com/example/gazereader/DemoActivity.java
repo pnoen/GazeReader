@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -68,27 +69,58 @@ public class DemoActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private Button btnHome;
-    private Button btnBook1;
-    private Button btnBook2;
-    private Button btnBook3;
+    private Button btnSettings;
     private View viewWarningTracking;
+    private Button btnMiddlemarch;
+    private Button btnRomeoAndJuliet;
+    private Button btnRoomWithView;
+    private Button btnMobyDick;
+    private Button btnEnchantedApril;
+    private Button btnCranford;
+    private Button btnExpeditionOfHumphry;
+    private Button btnAdventuresOfRoderick;
+    private ScrollView scrollView;
+    private Button btnLibraryScrollUp;
+    private Button btnLibraryScrollDown;
 
     private void initView() {
         gazePathView = findViewById(R.id.gazePathView);
         viewWarningTracking = findViewById(R.id.view_warning_tracking);
 
-        btnHome = findViewById(R.id.btn_home);
-        btnHome.setOnClickListener(onClickListenerHome);
+        btnSettings = findViewById(R.id.btn_settings);
+        btnSettings.setOnClickListener(onClickListenerSettings);
 
-        btnBook1 = findViewById(R.id.btn_book1);
-        btnBook1.setOnClickListener(onClickListenerBookBtn);
+        btnMiddlemarch = findViewById(R.id.btn_middlemarch);
+        btnMiddlemarch.setOnClickListener(onClickListenerBookBtn);
 
-        btnBook2 = findViewById(R.id.btn_book2);
-        btnBook2.setOnClickListener(onClickListenerBookBtn);
+        btnRomeoAndJuliet = findViewById(R.id.btn_romeo_and_juliet);
+        btnRomeoAndJuliet.setOnClickListener(onClickListenerBookBtn);
 
-        btnBook3 = findViewById(R.id.btn_book3);
-        btnBook3.setOnClickListener(onClickListenerBookBtn);
+        btnRoomWithView = findViewById(R.id.btn_room_with_view);
+        btnRoomWithView.setOnClickListener(onClickListenerBookBtn);
+
+        btnMobyDick = findViewById(R.id.btn_moby_dick);
+        btnMobyDick.setOnClickListener(onClickListenerSettings);
+
+        btnEnchantedApril = findViewById(R.id.btn_enchanted_april);
+        btnEnchantedApril.setOnClickListener(onClickListenerBookBtn);
+
+        btnCranford = findViewById(R.id.btn_cranford);
+        btnCranford.setOnClickListener(onClickListenerBookBtn);
+
+        btnExpeditionOfHumphry = findViewById(R.id.btn_expedition_of_humphry);
+        btnExpeditionOfHumphry.setOnClickListener(onClickListenerBookBtn);
+
+        btnAdventuresOfRoderick = findViewById(R.id.btn_adventures_of_roderick);
+        btnAdventuresOfRoderick.setOnClickListener(onClickListenerBookBtn);
+
+        scrollView = findViewById(R.id.main_scrollview);
+
+        btnLibraryScrollUp = findViewById(R.id.btn_library_scroll_up);
+        btnLibraryScrollUp.setOnClickListener(onClickListenerScroll);
+
+        btnLibraryScrollDown = findViewById(R.id.btn_library_scroll_down);
+        btnLibraryScrollDown.setOnClickListener(onClickListenerScroll);
     }
 
     private void setOffsetOfView() {
@@ -134,10 +166,10 @@ public class DemoActivity extends AppCompatActivity {
         });
     }
 
-    private View.OnClickListener onClickListenerHome = new View.OnClickListener() {
+    private View.OnClickListener onClickListenerSettings = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (v == btnHome) {
+            if (v == btnSettings) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
@@ -147,14 +179,29 @@ public class DemoActivity extends AppCompatActivity {
     private View.OnClickListener onClickListenerBookBtn = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (v == btnBook1) {
+            if (v == btnMiddlemarch) {
                 showBook("middlemarch.epub");
             }
-            else if (v == btnBook2) {
+            else if (v == btnRomeoAndJuliet) {
+                showBook("romeo_and_juliet.epub");
+            }
+            else if (v == btnRoomWithView) {
                 showBook("a_room_with_a_view.epub");
             }
-            else if (v == btnBook3) {
-                showBook("romeo_and_juliet");
+            else if (v == btnMobyDick) {
+                showBook("moby_dick.epub");
+            }
+            else if (v == btnEnchantedApril) {
+                showBook("enchanted_april.epub");
+            }
+            else if (v == btnCranford) {
+                showBook("cranford.epub");
+            }
+            else if (v == btnExpeditionOfHumphry) {
+                showBook("expedition_of_humphry.epub");
+            }
+            else if (v == btnAdventuresOfRoderick) {
+                showBook("adventures_of_roderick.epub");
             }
         }
     };
@@ -164,4 +211,20 @@ public class DemoActivity extends AppCompatActivity {
         intent.putExtra("book", book);
         startActivity(intent);
     }
+
+    private View.OnClickListener onClickListenerScroll = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v == btnLibraryScrollUp) {
+                int scrollValueY = scrollView.getScrollY();
+                int scrollValueX = scrollView.getScrollX();
+                scrollView.smoothScrollTo(scrollValueX, scrollValueY - 1000);
+            }
+            else if (v == btnLibraryScrollDown) {
+                int scrollValueY = scrollView.getScrollY();
+                int scrollValueX = scrollView.getScrollX();
+                scrollView.smoothScrollTo(scrollValueX, scrollValueY + 1000);
+            }
+        }
+    };
 }
