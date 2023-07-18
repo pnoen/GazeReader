@@ -36,7 +36,7 @@ public class GazeTrackerManager {
 
     GazeTracker gazeTracker = null;
     // TODO: seeso dev key
-    String SEESO_LICENSE_KEY = "dev_hypwr99o0aajhso1a186828q4lqtep5mwvxcrlxo";
+    String SEESO_LICENSE_KEY = "devKey";
 
     static public GazeTrackerManager makeNewInstance(Context context) {
         if (mInstance != null) {
