@@ -203,11 +203,11 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="Moby Dick; Or, The Whale - Herman Melville"
+                                android:text="The Picture of Dorian Gray - Oscar Wilde"
                                 android:textColor="#000" />
 
                             <Button
-                                android:id="@+id/btn_moby_dick"
+                                android:id="@+id/btn_picture_of_dorian_gray"
                                 android:layout_width="75dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -281,11 +281,11 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="Cranford - Eliabeth Cleghorn Gaskell"
+                                android:text="The Blue Castle - L. M. Montgomery"
                                 android:textColor="#000" />
 
                             <Button
-                                android:id="@+id/btn_cranford"
+                                android:id="@+id/btn_blue_castle"
                                 android:layout_width="75dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -308,7 +308,7 @@
 
                         <LinearLayout
                             android:layout_width="125dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:orientation="vertical"
                             tools:ignore="MissingConstraints">
 
@@ -322,11 +322,11 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:text="The Expedition of Humphry Clinker - T. Smollett"
+                                android:text="The Brothers Karamazov - Fyodor Dostoyevsky"
                                 android:textColor="#000" />
 
                             <Button
-                                android:id="@+id/btn_expedition_of_humphry"
+                                android:id="@+id/btn_brothers_karamazov"
                                 android:layout_width="75dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -345,7 +345,7 @@
 
                         <LinearLayout
                             android:layout_width="125dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="vertical"
                             tools:ignore="MissingConstraints">
 

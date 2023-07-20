@@ -3,9 +3,14 @@ package com.example.gazereader;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,13 +21,19 @@ import camp.visual.gazetracker.gaze.GazeInfo;
 import camp.visual.gazetracker.state.EyeMovementState;
 import camp.visual.gazetracker.state.TrackingState;
 import camp.visual.gazetracker.util.ViewLayoutChecker;
+import io.documentnode.epub4j.domain.Author;
 import io.documentnode.epub4j.domain.Book;
+import io.documentnode.epub4j.domain.Resource;
+import io.documentnode.epub4j.domain.Spine;
 import io.documentnode.epub4j.epub.EpubReader;
 
 import com.example.gazereader.view.GazePathView;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReaderActivity extends AppCompatActivity {
@@ -49,6 +60,7 @@ public class ReaderActivity extends AppCompatActivity {
         Log.i(TAG, "onStart");
         gazeTrackerManager.setGazeTrackerCallbacks(gazeCallback);
         initView();
+        loadTextViews();
     }
 
     @Override
@@ -78,16 +90,45 @@ public class ReaderActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private Button btnBack;
+    private Button btnHome;
     private View viewWarningTracking;
+    private Button btnZoomOut;
+    private Button btnZoomIn;
+    private Button btnBookmark;
+    private ScrollView scrollView;
+    private Button btnScrollUp;
+    private Button btnScrollDown;
+    private TextView bookTitle;
+    private TextView bookAuthor;
+    private TextView bookText;
 
     private void initView() {
         gazePathView = findViewById(R.id.gazePathView);
         viewWarningTracking = findViewById(R.id.view_warning_tracking);
 
-        btnBack = findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(onClickListener);
+        btnHome = findViewById(R.id.btn_home);
+        btnHome.setOnClickListener(onClickListenerHomeBtn);
 
+        btnZoomOut = findViewById(R.id.btn_zoom_out);
+        btnZoomOut.setOnClickListener(onClickListenerZoomBtn);
+
+        btnZoomIn = findViewById(R.id.btn_zoom_in);
+        btnZoomIn.setOnClickListener(onClickListenerZoomBtn);
+
+        btnBookmark = findViewById(R.id.btn_bookmark);
+        btnBookmark.setOnClickListener(onClickListenerBookmarkBtn);
+
+        scrollView = findViewById(R.id.main_scrollview);
+
+        btnScrollUp = findViewById(R.id.btn_scroll_up);
+        btnScrollUp.setOnClickListener(onClickListenerScroll);
+
+        btnScrollDown = findViewById(R.id.btn_scroll_down);
+        btnScrollDown.setOnClickListener(onClickListenerScroll);
+
+        bookTitle = findViewById(R.id.book_title);
+        bookAuthor = findViewById(R.id.book_author);
+        bookText = findViewById(R.id.book_text);
     }
 
     private void setOffsetOfView() {
@@ -133,22 +174,79 @@ public class ReaderActivity extends AppCompatActivity {
         });
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
+    private View.OnClickListener onClickListenerHomeBtn = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (v == btnBack) {
-                showBackPage();
+            if (v == btnHome) {
+                showLibraryPage();
             }
         }
     };
 
-    private void showBackPage() {
+    private View.OnClickListener onClickListenerZoomBtn = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v == btnZoomOut) {
+                Log.i("BUTTON PRESSED", "Zoom out");
+            }
+            else if (v == btnZoomIn) {
+                Log.i("BUTTON PRESSED", "Zoom in");
+            }
+        }
+    };
+
+    private View.OnClickListener onClickListenerBookmarkBtn = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v == btnBookmark) {
+                Log.i("BUTTON PRESSED", "Bookmark");
+            }
+        }
+    };
+
+    private View.OnClickListener onClickListenerScroll = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v == btnScrollUp) {
+                if (!scrollView.canScrollVertically(-1)) {
+//                    Log.i("SCROLL", "Reached the top");
+                    if (pageCounter > firstPage) {
+                        pageCounter--;
+                        setPage();
+                    }
+                }
+                else {
+                    scrollView.smoothScrollBy(0, -1200);
+                }
+
+            }
+            else if (v == btnScrollDown) {
+                if (!scrollView.canScrollVertically(1)) {
+//                    Log.i("SCROLL", "Reached the bottom");
+                    if (pageCounter < pages.size() - 2) {
+                        pageCounter++;
+                        scrollView.post(() -> {
+                            scrollView.scrollTo(scrollView.getScrollX(), 0);
+                        });
+                        setPage();
+                    }
+                }
+                else {
+                    scrollView.smoothScrollBy(0, 1200);
+                }
+            }
+        }
+    };
+
+    private void showLibraryPage() {
         Intent intent = new Intent(getApplicationContext(), LibraryActivity.class);
         startActivity(intent);
     }
 
     private EpubReader epubReader;
     private Book book;
+    private static int firstPage = 3; // removes the table of contents
+    private int pageCounter = 3;
 
     private void setEpubReader() {
         Bundle extras = getIntent().getExtras();
@@ -166,9 +264,86 @@ public class ReaderActivity extends AppCompatActivity {
 
         } catch (IOException e) {
             Log.i("EPUB", "Not found " + bookFile);
-            showBackPage();
+            showLibraryPage();
         }
+    }
+
+    List<String> pages = new ArrayList<>();
+
+    private void loadTextViews() {
         List<String> titles = book.getMetadata().getTitles();
-        Log.i("EPUB", "book title: " + (titles.isEmpty() ? "book has no title" : titles.get(0)));
+        bookTitle.setText(titles.get(0));
+
+        List<Author> authors = book.getMetadata().getAuthors();
+        Author author = authors.get(0);
+        String authorStr = author.getFirstname() + " " + author.getLastname();
+        bookAuthor.setText(authorStr);
+
+        pages = getBookContent();
+        setPage();
+    }
+
+//    https://stackoverflow.com/questions/34294104/i-am-using-the-epublib-and-i-am-trying-to-get-the-entire-chapter-of-a-book-at-a
+    private List<String> getBookContent() {
+        List<String> pages = new ArrayList<>();
+        StringBuilder stringBuilder = new StringBuilder();
+        Spine spine = book.getSpine();
+        for (int i = 0; i < spine.size(); i++) {
+            Resource resource = spine.getResource(i);
+            try {
+                InputStream inputStream = resource.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String line = bufferedReader.readLine();;
+                while (line != null) {
+                    if (line.contains("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>")) {
+//                        Log.i("BOOK CONTENT", "found 1");
+                        stringBuilder.delete(0, stringBuilder.length());
+                    }
+
+                    if (line.contains("http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd")) {
+//                        Log.i("BOOK CONTENT", "found 2");
+                        line = line.substring(line.indexOf(">") + 1);
+                    }
+
+                    if ((line.contains("{") && line.contains("}")) || ((line.contains("/*")) && line.contains("*/")) || (line.contains("<!--") && line.contains("-->"))) {
+//                        Log.i("BOOK CONTENT", "found 3");
+                        line = "";
+                    }
+
+                    if (!line.trim().equals("")) {
+                        stringBuilder.append(Html.fromHtml(line));
+                        if (stringBuilder.length() > 0) {
+                            if (stringBuilder.substring(stringBuilder.length()-1).equals(" ")) {
+                                stringBuilder.append("\n\n");
+                            }
+                            else if (!stringBuilder.substring(stringBuilder.length()-2).equals("\n")) {
+                                stringBuilder.append(" ");
+                            }
+                        }
+                    }
+
+                    if (line.contains("</html>")) {
+                        pages.add(stringBuilder.toString());
+                        stringBuilder.setLength(0);
+                    }
+                    line = bufferedReader.readLine();
+                }
+            } catch (IOException e) {
+                Log.e("IOException", e.getMessage());
+            }
+        }
+        return pages;
+    }
+
+    private void setPage() {
+        if (pageCounter == firstPage) {
+            bookTitle.setVisibility(View.VISIBLE);
+            bookAuthor.setVisibility(View.VISIBLE);
+        }
+        else {
+            bookTitle.setVisibility(View.GONE);
+            bookAuthor.setVisibility(View.GONE);
+        }
+        bookText.setText(pages.get(pageCounter));
     }
 }

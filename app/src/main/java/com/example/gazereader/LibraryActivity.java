@@ -74,10 +74,10 @@ public class LibraryActivity extends AppCompatActivity {
     private Button btnMiddlemarch;
     private Button btnRomeoAndJuliet;
     private Button btnRoomWithView;
-    private Button btnMobyDick;
+    private Button btnPictureOfDorianGray;
     private Button btnEnchantedApril;
-    private Button btnCranford;
-    private Button btnExpeditionOfHumphry;
+    private Button btnBlueCastle;
+    private Button btnBrothersKaramazov;
     private Button btnAdventuresOfRoderick;
     private ScrollView scrollView;
     private Button btnLibraryScrollUp;
@@ -99,17 +99,17 @@ public class LibraryActivity extends AppCompatActivity {
         btnRoomWithView = findViewById(R.id.btn_room_with_view);
         btnRoomWithView.setOnClickListener(onClickListenerBookBtn);
 
-        btnMobyDick = findViewById(R.id.btn_moby_dick);
-        btnMobyDick.setOnClickListener(onClickListenerBookBtn);
+        btnPictureOfDorianGray = findViewById(R.id.btn_picture_of_dorian_gray);
+        btnPictureOfDorianGray.setOnClickListener(onClickListenerBookBtn);
 
         btnEnchantedApril = findViewById(R.id.btn_enchanted_april);
         btnEnchantedApril.setOnClickListener(onClickListenerBookBtn);
 
-        btnCranford = findViewById(R.id.btn_cranford);
-        btnCranford.setOnClickListener(onClickListenerBookBtn);
+        btnBlueCastle = findViewById(R.id.btn_blue_castle);
+        btnBlueCastle.setOnClickListener(onClickListenerBookBtn);
 
-        btnExpeditionOfHumphry = findViewById(R.id.btn_expedition_of_humphry);
-        btnExpeditionOfHumphry.setOnClickListener(onClickListenerBookBtn);
+        btnBrothersKaramazov = findViewById(R.id.btn_brothers_karamazov);
+        btnBrothersKaramazov.setOnClickListener(onClickListenerBookBtn);
 
         btnAdventuresOfRoderick = findViewById(R.id.btn_adventures_of_roderick);
         btnAdventuresOfRoderick.setOnClickListener(onClickListenerBookBtn);
@@ -188,18 +188,17 @@ public class LibraryActivity extends AppCompatActivity {
             else if (v == btnRoomWithView) {
                 showBook("a_room_with_a_view.epub");
             }
-            else if (v == btnMobyDick) {
-                Log.i("BOOK", "HERE");
-                showBook("moby_dick.epub");
+            else if (v == btnPictureOfDorianGray) {
+                showBook("picture_of_dorian_gray.epub");
             }
             else if (v == btnEnchantedApril) {
                 showBook("enchanted_april.epub");
             }
-            else if (v == btnCranford) {
-                showBook("cranford.epub");
+            else if (v == btnBlueCastle) {
+                showBook("blue_castle.epub");
             }
-            else if (v == btnExpeditionOfHumphry) {
-                showBook("expedition_of_humphry.epub");
+            else if (v == btnBrothersKaramazov) {
+                showBook("brothers_karamazov.epub");
             }
             else if (v == btnAdventuresOfRoderick) {
                 showBook("adventures_of_roderick.epub");
@@ -217,14 +216,16 @@ public class LibraryActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (v == btnLibraryScrollUp) {
-                int scrollValueY = scrollView.getScrollY();
-                int scrollValueX = scrollView.getScrollX();
-                scrollView.smoothScrollTo(scrollValueX, scrollValueY - 1000);
+//                int scrollValueY = scrollView.getScrollY();
+//                int scrollValueX = scrollView.getScrollX();
+//                scrollView.smoothScrollTo(scrollValueX, scrollValueY - 1000);
+                scrollView.smoothScrollBy(0, -1000);
             }
             else if (v == btnLibraryScrollDown) {
-                int scrollValueY = scrollView.getScrollY();
-                int scrollValueX = scrollView.getScrollX();
-                scrollView.smoothScrollTo(scrollValueX, scrollValueY + 1000);
+//                int scrollValueY = scrollView.getScrollY();
+//                int scrollValueX = scrollView.getScrollX();
+//                scrollView.smoothScrollTo(scrollValueX, scrollValueY + 1000);
+                scrollView.smoothScrollBy(0, 1000);
             }
         }
     };
