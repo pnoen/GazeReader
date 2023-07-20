@@ -296,17 +296,14 @@ public class ReaderActivity extends AppCompatActivity {
                 String line = bufferedReader.readLine();;
                 while (line != null) {
                     if (line.contains("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>")) {
-//                        Log.i("BOOK CONTENT", "found 1");
                         stringBuilder.delete(0, stringBuilder.length());
                     }
 
                     if (line.contains("http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd")) {
-//                        Log.i("BOOK CONTENT", "found 2");
                         line = line.substring(line.indexOf(">") + 1);
                     }
 
                     if ((line.contains("{") && line.contains("}")) || ((line.contains("/*")) && line.contains("*/")) || (line.contains("<!--") && line.contains("-->"))) {
-//                        Log.i("BOOK CONTENT", "found 3");
                         line = "";
                     }
 

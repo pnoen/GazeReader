@@ -216,15 +216,9 @@ public class LibraryActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (v == btnLibraryScrollUp) {
-//                int scrollValueY = scrollView.getScrollY();
-//                int scrollValueX = scrollView.getScrollX();
-//                scrollView.smoothScrollTo(scrollValueX, scrollValueY - 1000);
                 scrollView.smoothScrollBy(0, -1000);
             }
             else if (v == btnLibraryScrollDown) {
-//                int scrollValueY = scrollView.getScrollY();
-//                int scrollValueX = scrollView.getScrollX();
-//                scrollView.smoothScrollTo(scrollValueX, scrollValueY + 1000);
                 scrollView.smoothScrollBy(0, 1000);
             }
         }
