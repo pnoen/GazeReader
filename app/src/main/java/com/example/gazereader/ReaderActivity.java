@@ -1,5 +1,6 @@
 package com.example.gazereader;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -187,10 +188,16 @@ public class ReaderActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (v == btnZoomOut) {
-                Log.i("BUTTON PRESSED", "Zoom out");
+                if (zoomLevel > -3) {
+                    zoomLevel--;
+                    setPageZoomLevel();
+                }
             }
             else if (v == btnZoomIn) {
-                Log.i("BUTTON PRESSED", "Zoom in");
+                if (zoomLevel < 3) {
+                    zoomLevel++;
+                    setPageZoomLevel();
+                }
             }
         }
     };
@@ -247,6 +254,7 @@ public class ReaderActivity extends AppCompatActivity {
     private Book book;
     private static int firstPage = 3; // removes the table of contents
     private int pageCounter = 3;
+    private int zoomLevel = 0;
 
     private void setEpubReader() {
         Bundle extras = getIntent().getExtras();
@@ -278,6 +286,8 @@ public class ReaderActivity extends AppCompatActivity {
         Author author = authors.get(0);
         String authorStr = author.getFirstname() + " " + author.getLastname();
         bookAuthor.setText(authorStr);
+
+        setPageZoomLevel();
 
         pages = getBookContent();
         setPage();
@@ -342,5 +352,11 @@ public class ReaderActivity extends AppCompatActivity {
             bookAuthor.setVisibility(View.GONE);
         }
         bookText.setText(pages.get(pageCounter));
+    }
+
+    private void setPageZoomLevel() {
+        bookTitle.setTextSize(24 + zoomLevel);
+        bookAuthor.setTextSize(20 + zoomLevel);
+        bookText.setTextSize(14 + zoomLevel);
     }
 }
