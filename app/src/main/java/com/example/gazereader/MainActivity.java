@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // handler
-
     private void initHandler() {
         backgroundThread.start();
         backgroundHandler = new Handler(backgroundThread.getLooper());
@@ -179,13 +178,10 @@ public class MainActivity extends AppCompatActivity {
     // view
     private View layoutProgress;
     private View viewWarningTracking;
-//    private PointView viewPoint;
-//    private FaceBoxView viewFaceBox;
     private GazePathView gazePathView;
-    private Button btnStartCalibration, btnSetCalibration;
+    private Button btnStartCalibration;
     private Button btnGuiDemo;
     private CalibrationViewer viewCalibration;
-//    private LinearLayout linearLayoutView;
 
     // calibration type
     private CalibrationModeType calibrationType = CalibrationModeType.SIX_POINT;
@@ -201,10 +197,6 @@ public class MainActivity extends AppCompatActivity {
 
         btnStartCalibration = findViewById(R.id.btn_start_calibration);
         btnStartCalibration.setOnClickListener(onClickListenerBtn1);
-
-//        btnSetCalibration = findViewById(R.id.btn_set_calibration);
-//        btnSetCalibration.setOnClickListener(onClickListenerBtn2);
-//        btnSetCalibration.setOnTouchListener(onTouchListener);
 
         btnGuiDemo = findViewById(R.id.btn_gui_demo);
         btnGuiDemo.setOnClickListener(onClickListenerBtn3);
@@ -274,21 +266,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v == btnStartCalibration) {
-                startCalibration();
-            }
-//            else if (v == btnSetCalibration) {
-//                setCalibration();
-//            }
-            else if (v == btnGuiDemo) {
-                showGuiDemo();
-            }
-        }
-    };
-
     private View.OnClickListener onClickListenerBtn1 = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -297,19 +274,11 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener onClickListenerBtn2 = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-//            Log.i("Btn 2", "CLICK EVENT");
-            setCalibration();
-        }
-    };
-
     private View.OnClickListener onClickListenerBtn3 = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 //            Log.i("Btn 3", "CLICK EVENT");
-            showGuiDemo();
+            showLibraryPage();
         }
     };
 
@@ -460,9 +429,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onCalibrationFinished(double[] calibrationData) {
             // When calibration is finished, calibration data is stored to SharedPreference
-
             hideCalibrationView();
-            showToast("calibrationFinished", true);
+            showToast("Calibration complete", true);
         }
     };
 
@@ -497,7 +465,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initGaze() {
         showProgress();
-
         gazeTrackerManager.initGazeTracker(initializationCallback);
     }
 
@@ -509,7 +476,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean startCalibration() {
         boolean isSuccess = gazeTrackerManager.startCalibration(calibrationType, criteria);
         if (!isSuccess) {
-            showToast("calibration start fail", false);
+            showToast("Calibration start failed", false);
         }
         setViewAtGazeTrackerState();
         return isSuccess;
@@ -526,10 +493,10 @@ public class MainActivity extends AppCompatActivity {
         LoadCalibrationResult result = gazeTrackerManager.loadCalibrationData();
         switch (result) {
             case SUCCESS:
-                showToast("setCalibrationData success", true);
+                showToast("Calibration data loaded", true);
                 break;
             case FAIL_DOING_CALIBRATION:
-                showToast("calibrating", true);
+                showToast("Calibrating", true);
                 break;
 //            case FAIL_NO_CALIBRATION_DATA:
 //                showToast("Calibration data is null", true);
@@ -541,7 +508,7 @@ public class MainActivity extends AppCompatActivity {
         setViewAtGazeTrackerState();
     }
 
-    private void showGuiDemo() {
+    private void showLibraryPage() {
         Intent intent = new Intent(getApplicationContext(), LibraryActivity.class);
         startActivity(intent);
     }

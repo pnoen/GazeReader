@@ -170,7 +170,7 @@ public class LibraryActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (v == btnSettings) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
             }
         }
