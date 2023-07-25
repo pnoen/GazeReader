@@ -77,4 +77,12 @@ public class LibraryDataStorage {
         }
         return null;
     }
+
+    public void resetLibraryData() {
+        SharedPreferences.Editor editor = mContext.get().getSharedPreferences(TAG, Context.MODE_PRIVATE).edit();
+        for (int i = 0; i < books.size(); i++) {
+            editor.remove(LIBRARY_DATA + i);
+        }
+        editor.apply();
+    }
 }

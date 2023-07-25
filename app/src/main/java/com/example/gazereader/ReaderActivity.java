@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -216,6 +217,7 @@ public class ReaderActivity extends AppCompatActivity {
                 bookData[1] = scrollView.getScrollY();
                 bookData[2] = zoomLevel;
                 libraryDataStorage.saveBookData(bookFile, bookData);
+                showToast("Bookmarked", true);
             }
         }
     };
@@ -381,5 +383,14 @@ public class ReaderActivity extends AppCompatActivity {
         bookTitle.setTextSize(24 + zoomLevel);
         bookAuthor.setTextSize(20 + zoomLevel);
         bookText.setTextSize(14 + zoomLevel);
+    }
+
+    private void showToast(final String msg, final boolean isShort) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(ReaderActivity.this, msg, isShort ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

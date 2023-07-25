@@ -495,9 +495,9 @@ public class MainActivity extends AppCompatActivity {
     private void setCalibration() {
         LoadCalibrationResult result = gazeTrackerManager.loadCalibrationData();
         switch (result) {
-            case SUCCESS:
-                showToast("Calibration data loaded", true);
-                break;
+//            case SUCCESS:
+//                showToast("Calibration data loaded", true);
+//                break;
             case FAIL_DOING_CALIBRATION:
                 showToast("Calibrating", true);
                 break;

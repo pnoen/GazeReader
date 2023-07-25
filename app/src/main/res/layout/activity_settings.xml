@@ -102,7 +102,7 @@
 
                 <Space
                     android:layout_width="match_parent"
-                    android:layout_height="20dp" />
+                    android:layout_height="25dp" />
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -143,6 +143,10 @@
         </LinearLayout>
     </LinearLayout>
 
+    <include
+        android:id="@+id/confirmation_popup"
+        layout="@layout/confirmation_popup"
+        android:visibility="invisible" />
 
     <com.example.gazereader.view.GazePathView
         android:id="@+id/gazePathView"
