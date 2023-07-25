@@ -35,15 +35,12 @@ public class LibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
         gazeTrackerManager = GazeTrackerManager.getInstance();
-        Log.i(TAG, "gazeTracker version: " + GazeTracker.getVersionName());
-
         libraryDataStorage = LibraryDataStorage.getInstance();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(TAG, "onStart");
         gazeTrackerManager.setGazeTrackerCallbacks(gazeCallback);
         initView();
     }
@@ -53,21 +50,18 @@ public class LibraryActivity extends AppCompatActivity {
         super.onResume();
         gazeTrackerManager.startGazeTracking();
         setOffsetOfView();
-        Log.i(TAG, "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         gazeTrackerManager.stopGazeTracking();
-        Log.i(TAG, "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         gazeTrackerManager.removeCallbacks(gazeCallback);
-        Log.i(TAG, "onStop");
     }
 
     @Override
@@ -219,7 +213,7 @@ public class LibraryActivity extends AppCompatActivity {
         int[] data = libraryDataStorage.loadCalibrationData(book);
         if (data != null) {
             if (data[0] != 3 || data[1] != 0 || data[2] != 0) {
-                Log.i("BOOK DATA FOUND", Arrays.toString(data));
+//                Log.i("BOOK DATA FOUND", Arrays.toString(data));
 
                 TextView popupTitle = findViewById(R.id.popup_title);
                 popupTitle.setText("Bookmark found");
@@ -257,10 +251,6 @@ public class LibraryActivity extends AppCompatActivity {
                 });
                 return;
             }
-            Log.i("BOOK DATA FOUND", "2");
-        }
-        else {
-            Log.i("BOOK DATA FOUND", "null");
         }
 
         showBook(book);

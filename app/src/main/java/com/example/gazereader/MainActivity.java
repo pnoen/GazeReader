@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         gazeTrackerManager = GazeTrackerManager.makeNewInstance(this);
-        Log.i(TAG, "gazeTracker version: " + GazeTracker.getVersionName());
-
         libraryDataStorage = LibraryDataStorage.makeNewInstance(this);
 
         initView();
@@ -67,15 +65,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         gazeTrackerManager.setGazeTrackerCallbacks(gazeCallback, calibrationCallback, statusCallback);
-        Log.i(TAG, "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume");
         //To check even after switching screens
         setOffsetOfView();
         gazeTrackerManager.startGazeTracking();
@@ -85,15 +80,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         gazeTrackerManager.stopGazeTracking();
-        Log.i(TAG, "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
         gazeTrackerManager.removeCallbacks(gazeCallback, calibrationCallback, statusCallback);
-        Log.i(TAG, "onStop");
     }
 
     @Override
@@ -151,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         if (isGranted) {
             permissionGranted();
         } else {
-            showToast("not granted permissions", true);
+            showToast("Not granted permissions", true);
             finish();
         }
     }
@@ -272,7 +264,6 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener onClickListenerBtn1 = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            Log.i("Btn 1", "CLICK EVENT");
             startCalibration();
         }
     };
@@ -280,7 +271,6 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener onClickListenerBtn3 = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            Log.i("Btn 3", "CLICK EVENT");
             showLibraryPage();
         }
     };

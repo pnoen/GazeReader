@@ -45,7 +45,7 @@ public class LibraryDataStorage {
         int bookInd = books.indexOf(book);
         if (bookData != null && bookData.length > 0 && bookInd != -1) {
             SharedPreferences.Editor editor = mContext.get().getSharedPreferences(TAG, Context.MODE_PRIVATE).edit();
-            Log.i("LIBRARY DATA", LIBRARY_DATA + bookInd + " " + Arrays.toString(bookData));
+//            Log.i("LIBRARY DATA", LIBRARY_DATA + bookInd + " " + Arrays.toString(bookData));
             editor.putString(LIBRARY_DATA + bookInd, Arrays.toString(bookData));
             editor.apply();
         } else {

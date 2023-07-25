@@ -106,7 +106,7 @@ public class GazePathView extends View {
 
   public void onGaze(float x, float y, boolean is_fixation) {
     long curTime = System.currentTimeMillis();
-    Log.i("CurPoint", "x: " + x + " " + (x-offsetX) + " y: " + y + " " + (y-offsetY));
+//    Log.i("CurPoint", "x: " + x + " " + (x-offsetX) + " y: " + y + " " + (y-offsetY));
     PointF curPoint = new PointF(x - offsetX, y - offsetY);
 //    PointF curPoint = new PointF(x, y);
     if (!wasFixation || !is_fixation) {
@@ -240,7 +240,6 @@ public class GazePathView extends View {
         if ("scroll".equals((String) view.getTag())) {
           ScrollView scrollView = ((ViewGroup) this.getParent()).findViewById(R.id.main_scrollview);
           if (scrollView != null) {
-//            Log.i("SCROLLVIEW", "found");
             Rect scrollViewBoundary = new Rect();
             scrollView.getHitRect(scrollViewBoundary);
             if (!view.getLocalVisibleRect(scrollViewBoundary)) {
@@ -264,9 +263,9 @@ public class GazePathView extends View {
 
         if (boundary.contains(Math.round(fixationDrawPoint.x), Math.round(fixationDrawPoint.y))) {
           view.performClick();
-          Log.i("Click point", "" + getWeightedAverage(fixationHistory) + " " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
-          Log.i("Boundary", viewPos[0] + " " + (viewPos[0] + view.getWidth()) + " " + viewPos[1] + " " + (viewPos[1] + view.getHeight()));
-          Log.i("size", view.getWidth() + " " + view.getHeight());
+//          Log.i("Click point", "" + getWeightedAverage(fixationHistory) + " " + fixationDrawPoint.x + " " + fixationDrawPoint.y);
+//          Log.i("Boundary", viewPos[0] + " " + (viewPos[0] + view.getWidth()) + " " + viewPos[1] + " " + (viewPos[1] + view.getHeight()));
+//          Log.i("size", view.getWidth() + " " + view.getHeight());
           clearFixation();
           return true;
         }

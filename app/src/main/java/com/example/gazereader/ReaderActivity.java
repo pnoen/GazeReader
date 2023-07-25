@@ -53,8 +53,6 @@ public class ReaderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reader);
         gazeTrackerManager = GazeTrackerManager.getInstance();
-        Log.i(TAG, "gazeTracker version: " + GazeTracker.getVersionName());
-
         libraryDataStorage = LibraryDataStorage.getInstance();
 
         setEpubReader();
@@ -63,7 +61,6 @@ public class ReaderActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(TAG, "onStart");
         gazeTrackerManager.setGazeTrackerCallbacks(gazeCallback);
         initView();
         loadTextViews();
@@ -72,23 +69,20 @@ public class ReaderActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        gazeTrackerManager.startGazeTracking();
         setOffsetOfView();
-        Log.i(TAG, "onResume");
+        gazeTrackerManager.startGazeTracking();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         gazeTrackerManager.stopGazeTracking();
-        Log.i(TAG, "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         gazeTrackerManager.removeCallbacks(gazeCallback);
-        Log.i(TAG, "onStop");
     }
 
     @Override
@@ -285,7 +279,6 @@ public class ReaderActivity extends AppCompatActivity {
         try {
             InputStream inputStream = assetManager.open(bookFile);
             book = epubReader.readEpub(inputStream);
-            Log.i("TRY", "book");
 
         } catch (IOException e) {
             Log.i("EPUB", "Not found " + bookFile);

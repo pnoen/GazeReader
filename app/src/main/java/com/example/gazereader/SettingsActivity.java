@@ -45,7 +45,6 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         gazeTrackerManager = GazeTrackerManager.getInstance();
-        Log.i(TAG, "gazeTracker version: " + GazeTracker.getVersionName());
         initView();
         initHandler();
 
@@ -55,30 +54,26 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(TAG, "onStart");
         gazeTrackerManager.setGazeTrackerCallbacks(gazeCallback, calibrationCallback, statusCallback);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        gazeTrackerManager.startGazeTracking();
         setOffsetOfView();
-        Log.i(TAG, "onResume");
+        gazeTrackerManager.startGazeTracking();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         gazeTrackerManager.stopGazeTracking();
-        Log.i(TAG, "onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         gazeTrackerManager.removeCallbacks(gazeCallback, calibrationCallback, statusCallback);
-        Log.i(TAG, "onStop");
     }
 
     @Override
@@ -138,18 +133,6 @@ public class SettingsActivity extends AppCompatActivity {
     private final GazeCallback gazeCallback = new GazeCallback() {
         @Override
         public void onGaze(GazeInfo gazeInfo) {
-//            if (gazeInfo.trackingState == TrackingState.SUCCESS) {
-//                hideTrackingWarning();
-//                if (!gazeTrackerManager.isCalibrating()) {
-//                    if (oneEuroFilterManager.filterValues(gazeInfo.timestamp, gazeInfo.x, gazeInfo.y)) {
-//                        float[] filtered = oneEuroFilterManager.getFilteredValues();
-////                    Log.i(TAG, "x: " + filtered[0] + " y: " + filtered[1]);
-//                        gazePathView.onGaze(filtered[0], filtered[1], gazeInfo.eyeMovementState == EyeMovementState.FIXATION);
-//                    }
-//                }
-//            } else {
-//                showTrackingWarning();
-//            }
             processOnGaze(gazeInfo);
         }
     };
@@ -160,7 +143,6 @@ public class SettingsActivity extends AppCompatActivity {
             if (!gazeTrackerManager.isCalibrating()) {
                 float[] filtered_gaze = filterGaze(gazeInfo);
 //                Log.i(TAG, "x: " + filtered_gaze[0] + " y: " + filtered_gaze[1]);
-//                showGazePoint(filtered_gaze[0], filtered_gaze[1], gazeInfo.screenState);
                 gazePathView.onGaze(filtered_gaze[0], filtered_gaze[1], gazeInfo.eyeMovementState == EyeMovementState.FIXATION);
             }
         } else {
