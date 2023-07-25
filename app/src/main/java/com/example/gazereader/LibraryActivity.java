@@ -1,11 +1,14 @@
 package com.example.gazereader;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +21,8 @@ import camp.visual.gazetracker.state.TrackingState;
 import camp.visual.gazetracker.util.ViewLayoutChecker;
 import com.example.gazereader.view.GazePathView;
 
+import java.util.Arrays;
+
 public class LibraryActivity extends AppCompatActivity {
     private static final String TAG = LibraryActivity.class.getSimpleName();
     private final ViewLayoutChecker viewLayoutChecker = new ViewLayoutChecker();
@@ -25,6 +30,7 @@ public class LibraryActivity extends AppCompatActivity {
     private GazeTrackerManager gazeTrackerManager;
     private final OneEuroFilterManager oneEuroFilterManager = new OneEuroFilterManager(
             2, 30, 0.5F, 0.001F, 1.0F);
+    private LibraryDataStorage libraryDataStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,8 @@ public class LibraryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_library);
         gazeTrackerManager = GazeTrackerManager.getInstance();
         Log.i(TAG, "gazeTracker version: " + GazeTracker.getVersionName());
+
+        libraryDataStorage = LibraryDataStorage.getInstance();
     }
 
     @Override
@@ -82,6 +90,7 @@ public class LibraryActivity extends AppCompatActivity {
     private ScrollView scrollView;
     private Button btnLibraryScrollUp;
     private Button btnLibraryScrollDown;
+    private View confirmationPopup;
 
     private void initView() {
         gazePathView = findViewById(R.id.gazePathView);
@@ -121,6 +130,8 @@ public class LibraryActivity extends AppCompatActivity {
 
         btnLibraryScrollDown = findViewById(R.id.btn_library_scroll_down);
         btnLibraryScrollDown.setOnClickListener(onClickListenerScroll);
+
+        confirmationPopup = findViewById(R.id.confirmation_popup);
     }
 
     private void setOffsetOfView() {
@@ -180,35 +191,93 @@ public class LibraryActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (v == btnMiddlemarch) {
-                showBook("middlemarch.epub");
+                checkBookmark("middlemarch.epub");
             }
             else if (v == btnRomeoAndJuliet) {
-                showBook("romeo_and_juliet.epub");
+                checkBookmark("romeo_and_juliet.epub");
             }
             else if (v == btnRoomWithView) {
-                showBook("a_room_with_a_view.epub");
+                checkBookmark("a_room_with_a_view.epub");
             }
             else if (v == btnPictureOfDorianGray) {
-                showBook("picture_of_dorian_gray.epub");
+                checkBookmark("picture_of_dorian_gray.epub");
             }
             else if (v == btnEnchantedApril) {
-                showBook("enchanted_april.epub");
+                checkBookmark("enchanted_april.epub");
             }
             else if (v == btnBlueCastle) {
-                showBook("blue_castle.epub");
+                checkBookmark("blue_castle.epub");
             }
             else if (v == btnBrothersKaramazov) {
-                showBook("brothers_karamazov.epub");
+                checkBookmark("brothers_karamazov.epub");
             }
             else if (v == btnAdventuresOfRoderick) {
-                showBook("adventures_of_roderick.epub");
+                checkBookmark("adventures_of_roderick.epub");
             }
         }
     };
 
+    private void checkBookmark(String book) {
+        int[] data = libraryDataStorage.loadCalibrationData(book);
+        if (data != null) {
+            if (data[0] != 3 || data[1] != 0 || data[2] != 0) {
+                Log.i("BOOK DATA FOUND", Arrays.toString(data));
+
+                TextView popupTitle = findViewById(R.id.popup_title);
+                popupTitle.setText("Bookmark found");
+
+                TextView popupMessage = findViewById(R.id.popup_message);
+                popupMessage.setText("Where would you like to start reading from?");
+
+                Button popupNegativeButton = findViewById(R.id.btn_negative);
+                popupNegativeButton.setText("Beginning");
+                popupNegativeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        changeButtonsState(true);
+                        showBook(book);
+                    }
+                });
+
+                Button popupPositiveButton = findViewById(R.id.btn_postive);
+                popupPositiveButton.setText("Bookmark");
+                popupPositiveButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        changeButtonsState(true);
+                        showBookBookmarked(book, data);
+                    }
+                });
+
+                changeButtonsState(false);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        confirmationPopup.setVisibility(View.VISIBLE);
+                    }
+                });
+                return;
+            }
+            Log.i("BOOK DATA FOUND", "2");
+        }
+        else {
+            Log.i("BOOK DATA FOUND", "null");
+        }
+
+        showBook(book);
+    }
+
     private void showBook(String book) {
         Intent intent = new Intent(getApplicationContext(), ReaderActivity.class);
         intent.putExtra("book", book);
+        startActivity(intent);
+    }
+
+    private void showBookBookmarked(String book, int[] bookData) {
+        Intent intent = new Intent(getApplicationContext(), ReaderActivity.class);
+        intent.putExtra("book", book);
+        intent.putExtra("bookData", bookData);
         startActivity(intent);
     }
 
@@ -223,4 +292,18 @@ public class LibraryActivity extends AppCompatActivity {
             }
         }
     };
+
+    private void changeButtonsState(boolean state) {
+        btnSettings.setEnabled(state);
+        btnMiddlemarch.setEnabled(state);
+        btnRomeoAndJuliet.setEnabled(state);
+        btnRoomWithView.setEnabled(state);
+        btnPictureOfDorianGray.setEnabled(state);
+        btnEnchantedApril.setEnabled(state);
+        btnBlueCastle.setEnabled(state);
+        btnBrothersKaramazov.setEnabled(state);
+        btnAdventuresOfRoderick.setEnabled(state);
+        btnLibraryScrollUp.setEnabled(state);
+        btnLibraryScrollDown.setEnabled(state);
+    }
 }

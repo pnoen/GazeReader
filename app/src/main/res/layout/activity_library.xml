@@ -416,6 +416,11 @@
         </LinearLayout>
     </LinearLayout>
 
+    <include
+        android:id="@+id/confirmation_popup"
+        layout="@layout/confirmation_popup"
+        android:visibility="invisible" />
+
     <com.example.gazereader.view.GazePathView
         android:id="@+id/gazePathView"
         android:layout_width="match_parent"

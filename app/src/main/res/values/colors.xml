@@ -15,4 +15,6 @@
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
     <color name="primaryBlue">#3598AC</color>
+    <color name="secondaryBlue">#AFD5DD</color>
+    <color name="dimBackground">#BF757575</color>
 </resources>

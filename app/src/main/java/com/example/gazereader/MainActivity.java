@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewLayoutChecker viewLayoutChecker = new ViewLayoutChecker();
     private HandlerThread backgroundThread = new HandlerThread("background");
     private Handler backgroundHandler;
+    private LibraryDataStorage libraryDataStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         gazeTrackerManager = GazeTrackerManager.makeNewInstance(this);
         Log.i(TAG, "gazeTracker version: " + GazeTracker.getVersionName());
+
+        libraryDataStorage = LibraryDataStorage.makeNewInstance(this);
 
         initView();
         checkPermission();

@@ -236,7 +236,7 @@ public class GazePathView extends View {
       return true;
     }
     if (view instanceof Button) {
-      if (view.isShown()) {
+      if (view.isShown() && view.isEnabled()) {
         if ("scroll".equals((String) view.getTag())) {
           ScrollView scrollView = ((ViewGroup) this.getParent()).findViewById(R.id.main_scrollview);
           if (scrollView != null) {

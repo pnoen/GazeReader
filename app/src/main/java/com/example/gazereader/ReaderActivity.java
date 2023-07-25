@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ReaderActivity extends AppCompatActivity {
@@ -44,6 +45,7 @@ public class ReaderActivity extends AppCompatActivity {
     private GazeTrackerManager gazeTrackerManager;
     private final OneEuroFilterManager oneEuroFilterManager = new OneEuroFilterManager(
             2, 30, 0.5F, 0.001F, 1.0F);
+    private LibraryDataStorage libraryDataStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,8 @@ public class ReaderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reader);
         gazeTrackerManager = GazeTrackerManager.getInstance();
         Log.i(TAG, "gazeTracker version: " + GazeTracker.getVersionName());
+
+        libraryDataStorage = LibraryDataStorage.getInstance();
 
         setEpubReader();
     }
@@ -206,7 +210,12 @@ public class ReaderActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (v == btnBookmark) {
-                Log.i("BUTTON PRESSED", "Bookmark");
+//                Log.i("BUTTON PRESSED", "Bookmark");
+                int[] bookData = new int[3];
+                bookData[0] = pageCounter;
+                bookData[1] = scrollView.getScrollY();
+                bookData[2] = zoomLevel;
+                libraryDataStorage.saveBookData(bookFile, bookData);
             }
         }
     };
@@ -250,17 +259,23 @@ public class ReaderActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private String bookFile = null;
     private EpubReader epubReader;
     private Book book;
     private static int firstPage = 3; // removes the table of contents
     private int pageCounter = 3;
     private int zoomLevel = 0;
+    private int[] bookData;
 
     private void setEpubReader() {
         Bundle extras = getIntent().getExtras();
-        String bookFile = null;
         if(extras != null) {
             bookFile = extras.getString("book");
+            bookData = extras.getIntArray("bookData");
+            if (bookData != null) {
+                pageCounter = bookData[0];
+                zoomLevel = bookData[2];
+            }
         }
 
         epubReader = new EpubReader();
@@ -291,6 +306,14 @@ public class ReaderActivity extends AppCompatActivity {
 
         pages = getBookContent();
         setPage();
+        if (bookData != null) {
+            scrollView.post(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.scrollTo(scrollView.getScrollX(), bookData[1]);
+                }
+            });
+        }
     }
 
 //    https://stackoverflow.com/questions/34294104/i-am-using-the-epublib-and-i-am-trying-to-get-the-entire-chapter-of-a-book-at-a
