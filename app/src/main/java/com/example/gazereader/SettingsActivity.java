@@ -96,9 +96,11 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btnHome;
     private Button btnCalibrate;
     private Button btnReset;
+    private Button btnInfo;
     private View viewWarningTracking;
     private CalibrationViewer viewCalibration;
     private View confirmationPopup;
+    private View infoPopup;
 
     private CalibrationModeType calibrationType = CalibrationModeType.SIX_POINT;
     private AccuracyCriteria criteria = AccuracyCriteria.HIGH;
@@ -118,7 +120,11 @@ public class SettingsActivity extends AppCompatActivity {
         btnReset = findViewById(R.id.btn_reset);
         btnReset.setOnClickListener(onClickListenerReset);
 
+        btnInfo = findViewById(R.id.btn_info);
+        btnInfo.setOnClickListener(onClickListenerInfo);
+
         confirmationPopup = findViewById(R.id.confirmation_popup);
+        infoPopup = findViewById(R.id.info_popup);
     }
 
     private void setOffsetOfView() {
@@ -388,5 +394,35 @@ public class SettingsActivity extends AppCompatActivity {
         btnHome.setEnabled(state);
         btnCalibrate.setEnabled(state);
         btnReset.setEnabled(state);
+        btnInfo.setEnabled(state);
+    }
+
+    private View.OnClickListener onClickListenerInfo = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v == btnInfo) {
+                showInfoPage();
+            }
+        }
+    };
+
+    private void showInfoPage() {
+        Button infoDismissButton = findViewById(R.id.btn_dismiss);
+        infoDismissButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeButtonsState(true);
+                infoPopup.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        changeButtonsState(false);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                infoPopup.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

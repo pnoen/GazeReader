@@ -139,9 +139,54 @@
                         android:layout_height="0dp"
                         android:layout_weight="1" />
                 </TableRow>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Additional information:"
+                        android:textColor="#000" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2" />
+
+                    <Button
+                        android:id="@+id/btn_info"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="false"
+                        android:backgroundTint="@color/primaryBlue"
+                        android:textColor="#fff"
+                        android:textStyle="bold"
+                        android:text="View" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                </TableRow>
             </TableLayout>
         </LinearLayout>
     </LinearLayout>
+
+    <include
+        android:id="@+id/info_popup"
+        layout="@layout/info_popup"
+        android:visibility="invisible" />
 
     <include
         android:id="@+id/confirmation_popup"
