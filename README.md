@@ -21,3 +21,4 @@ This project has used Seeso's [sample project](https://github.com/visualcamp/see
 
 * https://seeso.io/
 * https://github.com/visualcamp/seeso-sample-android
+* https://github.com/documentnode/epub4j
