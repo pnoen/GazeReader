@@ -11,11 +11,13 @@ This project has used Seeso's [sample project](https://github.com/visualcamp/see
 ## Installation
 
 1. Install [Android Studio](https://developer.android.com/studio)
-2. In Android Studio, go to [```File > Project Structure > Dependencies```] and add a ```JAR\AAR Dependency```
+2. In Android Studio, go to [```File > Project Structure > Dependencies```] and add a ```JAR\AAR Dependency```.
 3. Type in the path ```libs/gazetracker-release.aar``` and select ```implementation```. Press ```OK```. If unsure, images shown [here](https://docs.seeso.io/nonversioning/quick-start/android-quick-start).
 4. Repeat step 2 and 3. This time with the path ```libs/libgaze-release.aar```.
-5. Connect your Android device with a USB connection. ```USB debugging``` will need to be enabled.
-6. Run the app with the green play button in the toolbar.
+5. Register an account and request for a development key [here](https://seeso.io/).
+6. Replace the text ```devKey``` with the key in [```app > src > main > java > com > example > gazereader > GazeTrackerManager.java```].
+7. Connect your Android device with a USB connection. ```USB debugging``` will need to be enabled.
+8. Run the app with the green play button in the toolbar.
 
 ## References
 
